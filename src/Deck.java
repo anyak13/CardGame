@@ -1,9 +1,13 @@
 import java.util.ArrayList;
-
+import javax.swing.*;
+import java.awt.*;
 
 public class Deck {
     private ArrayList<Card> cards;
     private int cardsLeft;
+
+    private Image cardImage;
+    private GameViewer window;
 
     public Deck(String[] ranks, String[] suits, int[] values) {
         cards = new ArrayList<Card>();
@@ -12,11 +16,12 @@ public class Deck {
         // Content standard: used nested for loops here to iterate through all the
         // suits, and for each suit, created a card of each rank
 
-        for (int i = 0; i < suits.length; i++)
+        for (int i = 0; i < ranks.length; i++)
         {
-            for (int j = 0; j < ranks.length; j++)
+            for (int j = 0; j < suits.length; j++)
             {
-                cards.add(new Card(ranks[j],suits[i],values[j]));
+                cardImage = new ImageIcon("Resources/"+ i + ".png").getImage();
+                cards.add(new Card(ranks[j],suits[i],values[j], cardImage));
                 cardsLeft++;
             }
         }
@@ -61,6 +66,16 @@ public class Deck {
             temp = cards.get(i);
             cards.set(i,cards.get(r));
             cards.set(r,temp);
+        }
+    }
+
+    public void draw(Graphics g) {
+        int xP1StartingCard = 0;
+        int yP1StartingCard = 0;
+        int xP2StartingCard = 700;
+        int yP2StartingCard = 0;
+        for (int i = 0; i < 7; i++) {
+            g.drawImage(cardImage, xP1StartingCard, yP1StartingCard+(150*i), window);
         }
     }
 }

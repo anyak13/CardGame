@@ -1,12 +1,18 @@
+import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
 public class Card {
     private String rank;
     private String suit;
     private int point;
+    private GameViewer window;
 
-    public Card(String rank, String suit, int point) {
+    private Image cardImage;
+    public Card(String rank, String suit, int point, Image cardImage) {
         this.rank = rank;
         this.suit = suit;
         this.point = point;
+        this.cardImage = cardImage;
     }
 
     public String getRank() {
@@ -35,5 +41,10 @@ public class Card {
 
     public String toString() {
         return rank + " of " + suit;
+    }
+
+    public void draw(Graphics g)
+    {
+        g.drawImage(cardImage, 50, 50, 50, 50, window);
     }
 }

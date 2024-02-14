@@ -1,20 +1,23 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import javax.swing.*;
+import java.awt.*;
 
 
 public class Game {
-    private Player p1;
-    private Player p2;
+    public Player p1;
+    public Player p2;
     private Deck deck;
 
     final static int HANDSIZE = 7;
     final static int BOOKSIZE = 4;
+    private GameViewer window;
+    private String userInput;
 
     // Constructor for the Game class that prepares for the game to be played
     // Creates the deck and initializes two players with user-input names and an initial hand
     public Game() {
-
+        this.window = new GameViewer(this);
         // create a standard deck of 52
         // Content standard: used arrays for the input variables into the Deck constructor
         // which made sense as these are fixed in size (i.e. there are always 4 suits in a
@@ -30,8 +33,14 @@ public class Game {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter first player's name: ");
         String player1name = input.nextLine();
+        userInput = player1name;
         System.out.println("Enter second player's name: ");
         String player2name = input.nextLine();
+        userInput = player2name;
+//        if (userInput.equals(player2name))
+//        {
+//            window.startGame(g);
+//        }
 
         // create a 7-card hand for each of the players
         ArrayList<Card> player1hand = new ArrayList<Card>();
