@@ -13,7 +13,6 @@ public class GameViewer extends JFrame {
     private Image cardBack;
     public static final int cardWith = 100;
     public static final int cardHeight = 150;
-
     private String action;
 
     // Constructor that initializes the game and images
@@ -67,7 +66,7 @@ public class GameViewer extends JFrame {
     // Method that starts the game
     public void startGame(Graphics g) {
         g.setColor(new Color(173,216,230));
-        g.fillRect(0, 0, 800, 800);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.black);
         g.setFont(new Font("Serif", Font.BOLD, 40));
         g.drawString(game.p1.getName(), 50, 75);
@@ -81,26 +80,30 @@ public class GameViewer extends JFrame {
         g.drawString(String.valueOf(game.p1.getPoints()), 285, 675);
         g.drawString(String.valueOf(game.p2.getPoints()), 480, 675);
         // Displays whos turn it is and each player's cards
+        int cardsP1XValue = 25;
+        int cardsP2XValue = 675;
+        int cardsYValue = 100;
+        int spaceBetweenCards = 40;
         if (game.getPlayer1Turn()) {
             g.drawString(game.p1.getName() + "'s turn", 300, 200);
             // If it is p1's turn, draw their cards up and p2's cards down
             for (int i = 0; i < game.p1.getHand().size(); i++) {
-                game.p1.getHand().get(i).draw(g, 25, 100 + (i * 40));
+                game.p1.getHand().get(i).draw(g, cardsP1XValue, cardsYValue + (i * spaceBetweenCards));
             }
             for (int i = 0; i < game.p2.getHand().size(); i++) {
-                game.p2.getHand().get(i).draw(g, 675, 100 + (i * 40));
-                game.p2.getHand().get(i).drawBacks(g, cardBack, 675, 100 + (i * 40));
+                game.p2.getHand().get(i).draw(g, 675, 100 + (i * spaceBetweenCards));
+                game.p2.getHand().get(i).drawBacks(g, cardBack, cardsP2XValue, cardsYValue + (i * spaceBetweenCards));
             }
         }
         // If it is p2's turn, draw their cards up and p1's cards down
         else {
             g.drawString(game.p2.getName() + "'s turn", 300, 200);
             for (int i = 0; i < game.p2.getHand().size(); i++) {
-                game.p2.getHand().get(i).draw(g, 675, 100 + (i * 40));
+                game.p2.getHand().get(i).draw(g, cardsP2XValue, cardsYValue + (i * spaceBetweenCards));
             }
             for (int i = 0; i < game.p1.getHand().size(); i++) {
-                game.p1.getHand().get(i).draw(g, 25, 100 + (i * 40));
-                game.p1.getHand().get(i).drawBacks(g, cardBack, 25, 100 + (i * 40));
+                game.p1.getHand().get(i).draw(g, cardsP1XValue, cardsYValue + (i * spaceBetweenCards));
+                game.p1.getHand().get(i).drawBacks(g, cardBack, cardsP1XValue, cardsYValue + (i * spaceBetweenCards));
             }
         }
         // Display "Go Fish" when someone needs to pull from the deck
@@ -117,16 +120,16 @@ public class GameViewer extends JFrame {
     // Method that sets up the window when someone wins the game
     public void winningScreen(Graphics g) {
         g.setColor(new Color(173,216,230));
-        g.fillRect(0, 0, 800, 800);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         g.setColor(Color.black);
         // Draws who the winner was or if it was a tie
         if (game.getGameState() == Game.STATE_P1WINS) {
-            g.drawString(game.p1.getName() + " wins!", 300, 400);
+            g.drawString(game.p1.getName() + " wins!", (WINDOW_HEIGHT / 2) - 100, WINDOW_HEIGHT / 2);
         }
         else if (game.getGameState() == Game.STATE_P2WINS) {
-            g.drawString(game.p2.getName() + " wins!", 300, 400);
+            g.drawString(game.p2.getName() + " wins!", (WINDOW_HEIGHT / 2) - 100, WINDOW_HEIGHT / 2);
         }
-        else g.drawString("It's a Tie", 300, 400);
+        else g.drawString("It's a Tie", (WINDOW_HEIGHT / 2) - 100, 400);
     }
 }
 
